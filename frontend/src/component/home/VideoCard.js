@@ -49,7 +49,7 @@ const VideoCard = ({title, channel, views, image}) => {
                 title={title}
                 subheader={`${views} views`}
             />
-            <Link href="#">
+            <Link href="/video">
                 <CardMedia
                     sx={style.cardMedia}
                     image={image}
