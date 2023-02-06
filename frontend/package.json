@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@auth0/auth0-react": "^2.0.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
@@ -14,6 +15,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0",
     "react-scripts": "5.0.1",
+    "tinybase": "^3.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
