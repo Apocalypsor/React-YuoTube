@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import {IconButton} from '@mui/material';
+import {Avatar, IconButton} from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import {useAuth0} from '@auth0/auth0-react';
 import {set} from "../../store";
@@ -12,26 +12,47 @@ import {set} from "../../store";
 const LoginButton = () => {
     const {loginWithRedirect} = useAuth0();
 
-    return <Button color="inherit" onClick={() => loginWithRedirect()}>Login</Button>;
+    return (<Button color="inherit" onClick={() => loginWithRedirect()}>Login</Button>);
 }
 
 const LogoutButton = () => {
-    const {logout} = useAuth0();
+    const {logout, user} = useAuth0();
     const logoutWithRedirect = () => logout({logoutParams: {returnTo: window.location.origin}});
 
-    return <Button color="inherit" onClick={logoutWithRedirect}>Logout</Button>;
+    return (
+        <>
+            <Avatar
+                alt={user.name}
+                src={user.picture}
+                sx={{width: 32, height: 32, mr: 1}}
+            />
+            <Button
+                variant="contained"
+                component="label"
+                color={"secondary"}
+            >
+                Upload
+                <input hidden accept="image/*" multiple type="file"/>
+            </Button>
+            <Button
+                color="inherit"
+                onClick={logoutWithRedirect}
+            >Logout</Button>
+        </>
+    );
 }
 
 
 const LoginLogoutButton = () => {
-    const {isAuthenticated, getAccessTokenSilently} = useAuth0();
+    const {isAuthenticated, getIdTokenClaims, user} = useAuth0();
 
     React.useEffect(() => {
         const setToken = async () => {
             if (isAuthenticated) {
                 try {
-                    const accessToken = await getAccessTokenSilently();
-                    await set("token", accessToken);
+                    const token = await getIdTokenClaims();
+                    await set("token", token.__raw);
+                    await set("user", JSON.stringify(user));
                 } catch (error) {
                     console.error(error);
                 }
