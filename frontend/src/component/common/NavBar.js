@@ -6,17 +6,42 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import {IconButton} from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
-import {Auth0Provider, useAuth0} from '@auth0/auth0-react';
+import {useAuth0} from '@auth0/auth0-react';
+import {set} from "../../store";
 
 const LoginButton = () => {
-    const {isAuthenticated, loginWithRedirect, logout} = useAuth0();
+    const {loginWithRedirect} = useAuth0();
 
-    return (
-        <Button color="inherit"
-                onClick={isAuthenticated ? () => logout({logoutParams: {returnTo: window.location.origin}}) : loginWithRedirect}>
-            {isAuthenticated ? 'Logout' : 'Login'}
-        </Button>
-    );
+    return <Button color="inherit" onClick={() => loginWithRedirect()}>Login</Button>;
+}
+
+const LogoutButton = () => {
+    const {logout} = useAuth0();
+    const logoutWithRedirect = () => logout({logoutParams: {returnTo: window.location.origin}});
+
+    return <Button color="inherit" onClick={logoutWithRedirect}>Logout</Button>;
+}
+
+
+const LoginLogoutButton = () => {
+    const {isAuthenticated, getAccessTokenSilently} = useAuth0();
+
+    React.useEffect(() => {
+        const setToken = async () => {
+            if (isAuthenticated) {
+                try {
+                    const accessToken = await getAccessTokenSilently();
+                    await set("token", accessToken);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        };
+
+        setToken();
+    }, [isAuthenticated]);
+
+    return isAuthenticated ? (<LogoutButton/>) : (<LoginButton/>);
 };
 
 function ButtonAppBar() {
@@ -37,16 +62,7 @@ function ButtonAppBar() {
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         Youtube
                     </Typography>
-                    <Auth0Provider
-                        domain={process.env.REACT_APP_AUTH0_DOMAIN}
-                        clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
-                        authorizationParams={{
-                            redirect_uri: window.location.origin
-                        }}
-                        cacheLocation="localstorage"
-                    >
-                        <LoginButton/>
-                    </Auth0Provider>
+                    <LoginLogoutButton/>
                 </Toolbar>
             </AppBar>
         </Box>
