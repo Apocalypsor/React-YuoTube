@@ -9,9 +9,10 @@ const client = axios.create({
 });
 
 const getClient = async () => {
-    const token = get('token');
+    const token = await get('token');
     if (token) {
-        client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        // TODO: If I add this token to Authorization header, I always get 401 Unauthorized from Strapi.
+        client.defaults.headers.common['token'] = token;
     }
 
     return client;

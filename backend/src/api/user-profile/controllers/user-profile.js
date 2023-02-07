@@ -14,11 +14,9 @@ module.exports = createCoreController('api::user-profile.user-profile', ({strapi
             const jwt = await jwtVerify(body.token);
             if (jwt) {
                 const {nickname, name, email, picture} = jwt;
-                const entity = await strapi.entityService.findMany('api::user-profile.user-profile', {
-                    filters: {email: email}
-                });
+                const entity = await strapi.service('api::user-profile.user-profile').findByEmail(email);
 
-                if (entity.length === 0) {
+                if (!entity) {
                     return await strapi.service('api::user-profile.user-profile').create({
                         data: {
                             nickname: nickname,
@@ -29,7 +27,7 @@ module.exports = createCoreController('api::user-profile.user-profile', ({strapi
                     });
                 } else {
                     return await strapi.service('api::user-profile.user-profile').update(
-                        entity[0].id,
+                        entity.id,
                         {
                             data: {
                                 nickname: nickname,
@@ -42,6 +40,6 @@ module.exports = createCoreController('api::user-profile.user-profile', ({strapi
             }
         }
 
-        ctx.rejectUnauthorized();
+        ctx.unauthorized('Invalid token');
     }
 }));
