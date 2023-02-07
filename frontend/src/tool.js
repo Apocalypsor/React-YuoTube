@@ -9,4 +9,17 @@ const getUser = async () => {
     }
 }
 
-export {getUser};
+const formatTime = (time) => {
+    try {
+        const date = new Date(time);
+        let options = {year: 'numeric', month: 'long', day: 'numeric'};
+        return date.toLocaleDateString('en-US', options);
+    } catch (e) {
+        return time;
+    }
+}
+
+export {
+    getUser,
+    formatTime
+};

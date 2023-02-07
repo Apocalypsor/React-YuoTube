@@ -1,6 +1,8 @@
 import React from 'react';
 import {Grid} from "@mui/material";
 import VideoCard from "../component/home/VideoCard";
+import {getVideos} from "../api/video";
+import Loading from "../component/common/Loading";
 
 const style = {
     root: {
@@ -13,17 +15,32 @@ const style = {
 
 
 const Home = () => {
-    return (
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [videos, setVideos] = React.useState([]);
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            const res = await getVideos();
+            setVideos(res);
+            setIsLoading(false);
+            console.log(res)
+        }
+
+        fetchData();
+    }, []);
+
+    return isLoading ? (<Loading/>) : (
         <div style={style.root}>
             <Grid container spacing={4}>
-                {[...Array(12)].map((_, index) => (
-                    <Grid item key={index} xs={12} sm={6} md={4}>
+                {videos.map((video) => (
+                    <Grid item key={video.id} xs={12} sm={6} md={4}>
                         <VideoCard
-                            title={`Video Title ${index + 1}`}
-                            channel={`Channel ${index + 1}`}
-                            views={`${(index + 1) * 1000}`}
-                            image={`https://picsum.photos/200/300?random=${index + 1}`}
-                            video='http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+                            id={video.id}
+                            title={video.attributes.title}
+                            views={video.attributes.views}
+                            image={video.attributes.thumbnail}
+                            user={video.attributes.user}
+                            createdAt={video.attributes.createdAt}
                         />
                     </Grid>
                 ))}

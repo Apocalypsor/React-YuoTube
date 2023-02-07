@@ -2,7 +2,9 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import {video} from "../data";
+import Loading from "../component/common/Loading";
+import {getVideoById} from "../api/video";
+import {useParams} from "react-router-dom";
 
 const style = {
     container: {
@@ -28,21 +30,32 @@ const style = {
 }
 
 function Video() {
+    const [video, setVideo] = React.useState();
+    let {id} = useParams();
 
-    return (
+    React.useEffect(() => {
+        const fetchData = async () => {
+            const result = await getVideoById(id);
+            setVideo(result);
+        }
+
+        fetchData();
+    }, [id]);
+
+    return !video ? (<Loading/>) : (
         <div style={style.container}>
             <Card sx={style.root}>
                 <CardContent>
                     <video
                         style={style.video}
-                        src={video.src}
+                        src={video.attributes.url}
                         controls
                     />
                     <Typography gutterBottom component="div" sx={style.title}>
-                        {video.title}
+                        {video.attributes.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" sx={style.description}>
-                        {video.description}
+                        {video.attributes.description}
                     </Typography>
                 </CardContent>
             </Card>

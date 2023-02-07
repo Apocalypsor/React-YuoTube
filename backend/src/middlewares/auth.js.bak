@@ -1,0 +1,28 @@
+'use strict';
+
+/**
+ * `auth` middleware
+ */
+
+const {jwt} = require("@strapi/plugin-users-permissions/server/services");
+module.exports = () => {
+    return async (ctx, next) => {
+        const {authorization} = ctx.request.header;
+        if (!authorization) {
+            return ctx.unauthorized('No authorization header');
+        } else {
+            const [type, token] = authorization.split(' ');
+            if (type !== 'Bearer') {
+                return ctx.unauthorized('Invalid authorization header');
+            } else {
+                try {
+                    ctx.state.user = jwt.verify(token, process.env.AUTH0_CERT, {algorithms: ['RS256']});
+                } catch (err) {
+                    return ctx.unauthorized('Invalid token');
+                }
+            }
+        }
+
+        await next();
+    };
+};

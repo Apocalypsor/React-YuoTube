@@ -1,11 +1,15 @@
 import React from "react";
 import {Avatar, Card, CardContent, CardHeader, CardMedia, IconButton} from "@mui/material";
-import Typography from "@mui/material/Typography";
-import SettingsIcon from '@mui/icons-material/Settings';
 import theme from "../../theme";
 import Link from '@mui/material/Link';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import Typography from "@mui/material/Typography";
+import {formatTime} from "../../tool";
 
 const style = {
+    link: {
+        textDecoration: 'none',
+    },
     card: {
         height: '100%',
         display: 'flex',
@@ -32,35 +36,37 @@ const style = {
     },
 };
 
-const VideoCard = ({title, channel, views, image}) => {
+const VideoCard = ({id, title, views, image, user, createdAt}) => {
     return (
         <Card sx={style.card}>
             <CardHeader
                 avatar={
-                    <Avatar aria-label="channel">
-                        {channel[0].toUpperCase()}
+                    <Avatar aria-label="avatar">
+                        {user[0].toUpperCase()}
                     </Avatar>
                 }
                 action={
                     <IconButton aria-label="settings">
-                        <SettingsIcon/>
+                        <OpenInNewIcon/>
                     </IconButton>
                 }
-                title={title}
-                subheader={`${views} views`}
+                title={<Link href={`/video/${id}`} sx={style.link}>{title}</Link>}
+                subheader={formatTime(createdAt)}
             />
-            <Link href="/video">
+
+            <Link href={`/video/${id}`} sx={style.link}>
                 <CardMedia
                     sx={style.cardMedia}
                     image={image}
                     title={title}
                 />
+
+                <CardContent sx={style.cardContent}>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {`${views} views`}
+                    </Typography>
+                </CardContent>
             </Link>
-            <CardContent sx={style.cardContent}>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    {channel}
-                </Typography>
-            </CardContent>
         </Card>
     );
 };

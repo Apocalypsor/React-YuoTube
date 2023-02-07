@@ -10,7 +10,7 @@ function Router() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/video" element={<Video/>}/>
+                <Route path="/video/:id" element={<Video/>}/>
             </Routes>
         </BrowserRouter>
     )
