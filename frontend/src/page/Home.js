@@ -23,7 +23,7 @@ const Home = () => {
             const res = await getVideos();
             setVideos(res);
             setIsLoading(false);
-            console.log(res)
+            console.log("videos", res);
         }
 
         fetchData();

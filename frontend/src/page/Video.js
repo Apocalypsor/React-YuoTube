@@ -29,7 +29,7 @@ const style = {
     }
 }
 
-function Video() {
+const Video = () => {
     const [video, setVideo] = React.useState();
     let {id} = useParams();
 

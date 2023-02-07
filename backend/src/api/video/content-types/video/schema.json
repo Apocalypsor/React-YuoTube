@@ -4,7 +4,8 @@
     "info": {
         "singularName": "video",
         "pluralName": "videos",
-        "displayName": "Video"
+        "displayName": "Video",
+        "description": ""
     },
     "options": {
         "draftAndPublish": true
@@ -23,14 +24,17 @@
         "thumbnail": {
             "type": "string"
         },
-        "user": {
-            "type": "email"
-        },
         "views": {
             "type": "biginteger"
         },
         "likes": {
             "type": "biginteger"
+        },
+        "user": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::user-profile.user-profile",
+            "inversedBy": "videos"
         }
     }
 }

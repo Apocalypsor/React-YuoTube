@@ -40,11 +40,11 @@ const VideoCard = ({id, title, views, image, user, createdAt}) => {
     return (
         <Card sx={style.card}>
             <CardHeader
-                avatar={
-                    <Avatar aria-label="avatar">
-                        {user[0].toUpperCase()}
-                    </Avatar>
-                }
+                avatar={<Avatar
+                    src={user.data.attributes.picture}
+                    alt="User avatar"
+                    sx={{height: 36, width: 36}}
+                />}
                 action={
                     <IconButton aria-label="settings">
                         <OpenInNewIcon/>

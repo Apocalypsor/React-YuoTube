@@ -2,7 +2,6 @@ import {getClient} from "./client";
 
 const getVideos = async () => {
     const videos = await (await getClient()).get('/videos');
-    console.log(videos);
     if (videos.data.hasOwnProperty("error")) {
         return [];
     } else {

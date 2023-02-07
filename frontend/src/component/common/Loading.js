@@ -10,10 +10,9 @@ const style = {
     },
 };
 
-function Loading() {
-
+const Loading = () => {
     return (
-        <div style={style}>
+        <div style={style.root}>
             <CircularProgress/>
         </div>
     );

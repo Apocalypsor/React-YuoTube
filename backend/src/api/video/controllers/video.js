@@ -8,6 +8,7 @@ const {createCoreController} = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::video.video', () => ({
     async find(ctx) {
+        ctx.query.populate = ['user'];
         const entities = await super.find(ctx);
         const fields = ['title', 'views', 'thumbnail', 'user', 'createdAt'];
         entities.data = entities.data.map(entity => {
