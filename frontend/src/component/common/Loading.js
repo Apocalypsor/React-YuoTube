@@ -7,6 +7,7 @@ const style = {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%',
+        marginTop: '50px',
     },
 };
 

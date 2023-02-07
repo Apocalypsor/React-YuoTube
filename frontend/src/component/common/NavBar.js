@@ -8,6 +8,7 @@ import {Avatar, IconButton} from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import {useAuth0} from '@auth0/auth0-react';
 import {clear} from "../../store";
+import UploadModal from "./UploadModal";
 
 const LoginButton = () => {
     const {loginWithRedirect} = useAuth0();
@@ -29,14 +30,7 @@ const LogoutButton = () => {
                 src={user.picture}
                 sx={{width: 32, height: 32, mr: 1}}
             />
-            <Button
-                variant="contained"
-                component="label"
-                color={"secondary"}
-            >
-                Upload
-                <input hidden accept="image/*" multiple type="file"/>
-            </Button>
+            <UploadModal/>
             <Button
                 color="inherit"
                 onClick={logoutWithRedirect}

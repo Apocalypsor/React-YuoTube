@@ -6,7 +6,7 @@ module.exports = ({env}) => ([
         config: {
             enabled: true,
             headers: '*',
-            origin: [env('CORS_ORIGIN', '*')]
+            origin: env('CORS_ORIGIN', '*').split(','),
         }
     },
     'strapi::poweredBy',
