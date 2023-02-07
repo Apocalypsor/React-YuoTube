@@ -13,4 +13,8 @@ const get = async (key) => {
     return store.getValue(key);
 }
 
-export {set, get};
+const clear = () => {
+    sessionStorage.clear();
+}
+
+export {set, get, clear};

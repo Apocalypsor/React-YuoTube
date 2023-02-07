@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import {Avatar, IconButton} from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import {useAuth0} from '@auth0/auth0-react';
-import {set} from "../../store";
+import {clear} from "../../store";
 
 const LoginButton = () => {
     const {loginWithRedirect} = useAuth0();
@@ -17,7 +17,10 @@ const LoginButton = () => {
 
 const LogoutButton = () => {
     const {logout, user} = useAuth0();
-    const logoutWithRedirect = () => logout({logoutParams: {returnTo: window.location.origin}});
+    const logoutWithRedirect = () => {
+        clear();
+        logout({logoutParams: {returnTo: window.location.origin}});
+    };
 
     return (
         <>
@@ -44,23 +47,7 @@ const LogoutButton = () => {
 
 
 const LoginLogoutButton = () => {
-    const {isAuthenticated, getIdTokenClaims, user} = useAuth0();
-
-    React.useEffect(() => {
-        const setToken = async () => {
-            if (isAuthenticated) {
-                try {
-                    const token = await getIdTokenClaims();
-                    await set("token", token.__raw);
-                    await set("user", JSON.stringify(user));
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-        };
-
-        setToken();
-    }, [isAuthenticated]);
+    const {isAuthenticated} = useAuth0();
 
     return isAuthenticated ? (<LogoutButton/>) : (<LoginButton/>);
 };
