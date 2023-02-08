@@ -14,7 +14,7 @@ const styles = {
     }
 };
 
-function LikeButton({videoId, size = "large"}) {
+function LikeButton({videoId, refreshLikes, size = "large"}) {
     const [userId, setUserId] = React.useState(null);
     const [liked, setLiked] = React.useState({});
 
@@ -42,7 +42,7 @@ function LikeButton({videoId, size = "large"}) {
                 setLiked({found: false});
                 await postUnlike(liked.id);
             }
-
+            await refreshLikes();
         }
 
         postData();

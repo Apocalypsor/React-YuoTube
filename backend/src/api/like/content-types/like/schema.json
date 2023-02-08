@@ -19,8 +19,9 @@
         },
         "video": {
             "type": "relation",
-            "relation": "oneToOne",
-            "target": "api::video.video"
+            "relation": "manyToOne",
+            "target": "api::video.video",
+            "inversedBy": "likes"
         }
     }
 }

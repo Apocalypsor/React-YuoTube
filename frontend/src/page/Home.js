@@ -61,6 +61,7 @@ const Home = () => {
                                 id={video.id}
                                 title={video.attributes.title}
                                 views={video.attributes.views}
+                                likes={video.attributes.likes}
                                 image={video.attributes.thumbnail}
                                 user={video.attributes.user}
                                 createdAt={video.attributes.createdAt}

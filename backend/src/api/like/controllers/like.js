@@ -42,5 +42,11 @@ module.exports = createCoreController('api::like.like', ({strapi}) => ({
         }
 
         return super.create(ctx);
+    },
+
+    async count(ctx) {
+        const {videoId} = ctx.params;
+        console.log(videoId);
+        return await strapi.service('api::like.like').count(videoId);
     }
 }));

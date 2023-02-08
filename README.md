@@ -66,14 +66,15 @@ First make sure you are in the `backend` folder.
 
    For Authenticated Users, you have to ensure you have following permissions:
    ```
-   Comment: create, find
-   Like: create, find, delete
-   User-profile: callback, find, findOne
-   Video: create, find, findOne, view
+   Comment: Select All
+   Like: Select All
+   User-profile: Select All
+   Video: Select All
    Upload: find, findOne, upload
    ```
    For Public Users, you have to ensure you have following permissions:
    ```
+   Like: count, find
    User-profile: callback, find, findOne
    Video: find, findOne, view
    Upload: findOne

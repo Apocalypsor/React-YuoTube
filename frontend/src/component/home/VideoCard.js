@@ -5,6 +5,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import Typography from "@mui/material/Typography";
 import {formatTime} from "../../tool";
 import LikeButton from "../common/LikeButton";
+import {getLikeCount} from "../../api/like";
 
 const style = {
     link: {
@@ -27,7 +28,13 @@ const style = {
     },
 };
 
-const VideoCard = ({id, title, views, image, user, createdAt}) => {
+const VideoCard = ({id, title, views, likes, image, user, createdAt}) => {
+    const [likeCount, setLikes] = React.useState(likes);
+    const refreshLikes = async () => {
+        const result = await getLikeCount(id);
+        setLikes(result);
+    }
+
     return (
         <Card sx={style.card}>
             <CardHeader
@@ -54,8 +61,10 @@ const VideoCard = ({id, title, views, image, user, createdAt}) => {
             </Link>
 
             <CardContent sx={style.cardContent}>
-                <Typography body1='span' fontSize={'1.2rem'}>{`${views} views`}</Typography>
-                <LikeButton size={'medium'} videoId={id}/>
+                <Typography body1='span' fontSize={'1.2rem'}>
+                    {`${views} views ｜ ${likeCount} likes`}
+                </Typography>
+                <LikeButton size={'medium'} refreshLikes={refreshLikes} videoId={id}/>
             </CardContent>
 
         </Card>

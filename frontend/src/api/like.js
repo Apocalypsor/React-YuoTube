@@ -15,8 +15,14 @@ const postUnlike = async (id) => {
     return res.data;
 }
 
+const getLikeCount = async (videoId) => {
+    const res = await (await getClient()).get(`/api/likes/count/${videoId}`);
+    return res.data;
+}
+
 export {
     getLike,
     postLike,
-    postUnlike
+    postUnlike,
+    getLikeCount
 }

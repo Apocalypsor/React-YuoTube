@@ -8,10 +8,12 @@ const {createCoreController} = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::video.video', () => ({
     async find(ctx) {
-        ctx.query.populate = ['user'];
+        ctx.query.populate = "*";
         const entities = await super.find(ctx);
-        const fields = ['title', 'views', 'thumbnail', 'user', 'createdAt'];
+
+        const fields = ['title', 'views', 'likes', 'thumbnail', 'user', 'createdAt'];
         entities.data = entities.data.map(entity => {
+            entity.attributes.likes = entity.attributes.likes.data.length;
             entity.attributes = Object.entries(entity.attributes).reduce((newObj, [key, value]) => {
                 if (fields.includes(key)) {
                     newObj[key] = value;
@@ -21,6 +23,16 @@ module.exports = createCoreController('api::video.video', () => ({
             return entity;
         });
         return entities;
+    },
+
+    async findOne(ctx) {
+        ctx.query.populate = "*";
+        const entity = await super.findOne(ctx);
+        if (entity.data) {
+            entity.data.attributes.likes = entity.data.attributes.likes.data.length;
+        }
+
+        return entity;
     },
 
     async view(ctx) {

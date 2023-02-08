@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import {getCommentByVideoId, postComment} from "../api/comment";
 import {getUser} from "../tool";
 import UserCard from "../component/common/UserCard";
+import {getLikeCount} from "../api/like";
 
 const style = {
     container: {
@@ -106,6 +107,7 @@ const Video = () => {
     const {id} = useParams();
     const viewed = React.useRef(false);
     const [views, setViews] = React.useState(0);
+    const [likes, setLikes] = React.useState(0);
 
     const [user, setUser] = React.useState();
     const [userCard, setUserCard] = React.useState({});
@@ -124,20 +126,26 @@ const Video = () => {
             const result = await getVideoById(id);
             setVideo(result);
             setUserCard(result.attributes.user.data.attributes);
+            setLikes(result.attributes.likes);
 
             const comments = await getCommentByVideoId(id);
             setComments(comments);
 
             if (!viewed.current) {
                 viewed.current = true;
-                const views = await postView(id);
-                setViews(views);
+                const retViews = await postView(id);
+                setViews(retViews);
             }
 
         }
 
         fetchData();
     }, [id]);
+
+    const refreshLikes = async () => {
+        const result = await getLikeCount(id);
+        setLikes(result);
+    }
 
     const postNewComment = async () => {
         const postData = async () => {
@@ -169,9 +177,11 @@ const Video = () => {
                             </Typography>
                         </Box>
                         <Box sx={style.viewsBox}>
-                            <div style={{paddingLeft: "2%", marginRight: "5%"}}><LikeButton videoId={id}/></div>
+                            <div style={{paddingLeft: "2%", marginRight: "5%"}}><LikeButton videoId={id}
+                                                                                            refreshLikes={refreshLikes}/>
+                            </div>
                             <Typography variant="body2" color="text.secondary" sx={style.views}>
-                                {views} views
+                                {`${views} views ｜ ${likes} likes`}
                             </Typography>
                         </Box>
                     </div>

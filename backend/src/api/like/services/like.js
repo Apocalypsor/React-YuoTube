@@ -29,5 +29,12 @@ module.exports = createCoreService('api::like.like', ({strapi}) => ({
             res.video = videoId;
             return res;
         }
+    },
+
+    async count(videoId) {
+        const entity = await strapi.entityService.findMany('api::like.like', {
+            filters: {video: videoId}
+        });
+        return entity.length;
     }
 }));

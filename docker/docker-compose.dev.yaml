@@ -20,6 +20,8 @@ services:
       - DATABASE_NAME=postgres
       - DATABASE_PASSWORD=postgres
       - DATABASE_SSL=false
+    volumes:
+      - upload:/app/public/uploads
     ports:
       - 80:1337
 
@@ -35,3 +37,4 @@ services:
 
 volumes:
   db_data:
+  upload:
