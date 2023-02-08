@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import {Grid} from "@mui/material";
 import VideoCard from "../component/home/VideoCard";
 import {getVideos} from "../api/video";
@@ -34,14 +34,16 @@ const Home = () => {
             <Grid container spacing={4}>
                 {videos.map((video) => (
                     <Grid item key={video.id} xs={12} sm={6} md={4}>
-                        <VideoCard
-                            id={video.id}
-                            title={video.attributes.title}
-                            views={video.attributes.views}
-                            image={video.attributes.thumbnail}
-                            user={video.attributes.user}
-                            createdAt={video.attributes.createdAt}
-                        />
+                        <Suspense fallback={<Loading/>}>
+                            <VideoCard
+                                id={video.id}
+                                title={video.attributes.title}
+                                views={video.attributes.views}
+                                image={video.attributes.thumbnail}
+                                user={video.attributes.user}
+                                createdAt={video.attributes.createdAt}
+                            />
+                        </Suspense>
                     </Grid>
                 ))}
             </Grid>

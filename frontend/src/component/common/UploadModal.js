@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import {Alert, Divider, Snackbar} from "@mui/material";
+import {Divider} from "@mui/material";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
@@ -10,6 +10,7 @@ import TextField from "@mui/material/TextField";
 import theme from "../../theme";
 import {createVideo, upload} from "../../api/video";
 import {getUser} from "../../tool";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const style = {
     uploadModal: {
@@ -26,6 +27,10 @@ const style = {
         boxShadow: 24,
         padding: '16px 32px 24px',
         overflow: 'auto',
+    },
+    loading: {
+        position: 'absolute',
+        right: "30%",
     },
     uploadWrapper: {
         marginTop: "5%",
@@ -55,7 +60,7 @@ const style = {
 
 function UploadModal() {
     const [open, setOpen] = useState(false);
-    const [showAlert, setShowAlert] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const [uploadedVideo, setUploadedVideo] = useState();
     const [uploadedCover, setUploadedCover] = useState();
@@ -104,12 +109,9 @@ function UploadModal() {
 
         }
 
+        setLoading(true);
         postData().then((res) => {
-            setShowAlert(true)
-            setTimeout(() => {
-                setShowAlert(false)
-            }, 3000)
-
+            setLoading(false);
             window.location.reload()
         });
     }
@@ -245,14 +247,8 @@ function UploadModal() {
                         <Button variant="contained" onClick={handleUploadClose}>
                             Upload
                         </Button>
+                        {loading && <CircularProgress sx={style.loading}/>}
                     </Container>
-                    {showAlert && <Snackbar
-                        anchorOrigin={{vertical: 'top', horizontal: 'center',}}
-                        open={open}
-                        message="Successful"
-                    >
-                        <Alert severity="success">Post Uploaded Successful!</Alert>
-                    </Snackbar>}
                 </Box>
             </Modal>
         </>

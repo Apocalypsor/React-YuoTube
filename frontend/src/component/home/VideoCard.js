@@ -46,7 +46,7 @@ const VideoCard = ({id, title, views, image, user, createdAt}) => {
                     sx={{height: 36, width: 36}}
                 />}
                 action={
-                    <IconButton aria-label="settings">
+                    <IconButton href={`/video/${id}`}>
                         <OpenInNewIcon/>
                     </IconButton>
                 }
