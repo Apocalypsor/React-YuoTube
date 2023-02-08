@@ -1,0 +1,26 @@
+{
+    "kind": "collectionType",
+    "collectionName": "likes",
+    "info": {
+        "singularName": "like",
+        "pluralName": "likes",
+        "displayName": "Like",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": false
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "user": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::user-profile.user-profile"
+        },
+        "video": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::video.video"
+        }
+    }
+}
