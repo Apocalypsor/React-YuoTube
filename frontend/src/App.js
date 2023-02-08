@@ -33,7 +33,7 @@ function App() {
                     cacheLocation="localstorage"
                 >
                     <Navbar/>
-                    <div style={{marginTop: "4%"}}></div>
+                    <div style={{marginTop: "80px"}}></div>
                     <Router/>
                 </Auth0Provider>
             </ThemeProvider>

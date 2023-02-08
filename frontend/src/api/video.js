@@ -1,7 +1,18 @@
 import {getClient} from "./client";
+import qs from "qs";
 
-const getVideos = async () => {
-    const videos = await (await getClient()).get('/api/videos?sort=createdAt:desc');
+const getVideos = async (page = 1) => {
+    const query = qs.stringify({
+        sort: ['createdAt:desc'],
+        pagination: {
+            pageSize: 6,
+            page: page,
+        },
+    }, {
+        encodeValuesOnly: true, // prettify URL
+    });
+
+    const videos = await (await getClient()).get(`/api/videos?${query}`);
     if (videos.data.hasOwnProperty("error")) {
         return [];
     } else {
