@@ -21,5 +21,17 @@ module.exports = createCoreController('api::video.video', () => ({
             return entity;
         });
         return entities;
+    },
+
+    async view(ctx) {
+        const {id} = ctx.params;
+        const {query} = ctx;
+        console.log(id);
+        const entity = await strapi.service('api::video.video').findOne(id, query);
+        entity.views = '' + (parseInt(entity.views) + 1);
+        console.log(entity);
+        return await strapi.service('api::video.video').update(id, {
+            data: entity
+        });
     }
 }));

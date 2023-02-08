@@ -56,9 +56,19 @@ const upload = async (formData) => {
     }
 }
 
+const postView = async (id) => {
+    const response = await (await getClient()).get(`/api/video/view/${id}`);
+    if (!response.data) {
+        return {};
+    } else {
+        return response.data;
+    }
+}
+
 export {
     getVideos,
     getVideoById,
     createVideo,
-    upload
+    upload,
+    postView
 };

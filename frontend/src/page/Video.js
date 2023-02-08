@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Loading from "../component/common/Loading";
-import {getVideoById} from "../api/video";
+import {getVideoById, postView} from "../api/video";
 import {useParams} from "react-router-dom";
 import LikeButton from "../component/common/LikeButton";
 import {Avatar, Divider} from "@mui/material";
@@ -87,6 +87,8 @@ const style = {
 
 const Video = () => {
     const {id} = useParams();
+    const viewed = React.useRef(false);
+
     const [user, setUser] = React.useState();
     const [video, setVideo] = React.useState();
 
@@ -105,6 +107,13 @@ const Video = () => {
 
             const comments = await getCommentByVideoId(id);
             setComments(comments);
+
+            if (!viewed.current) {
+                viewed.current = true;
+                const views = await postView(id);
+                console.log(views);
+            }
+
         }
 
         fetchData();
