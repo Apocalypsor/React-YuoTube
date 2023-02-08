@@ -16,7 +16,7 @@ First make sure you are in the `frontend` folder.
     ```
    REACT_APP_AUTH0_DOMAIN=Your Auth0 Domain
    REACT_APP_AUTH0_CLIENT_ID=Your Auth0 Client ID
-   REACT_APP_API_URL=Your Backend URL, do not include the path /api
+   REACT_APP_API_URL=Your Backend URL, do not include the trailing slash
    ```
 
 ## Backend
