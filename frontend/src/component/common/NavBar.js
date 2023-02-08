@@ -10,6 +10,39 @@ import {useAuth0} from '@auth0/auth0-react';
 import {clear} from "../../store";
 import UploadModal from "./UploadModal";
 
+const style = {
+    head: {
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+    },
+    navBar: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    home: {
+        width: "20%",
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "center",
+    },
+    title: {
+        width: "20%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    loginLogoutButton: {
+        width: "20%",
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+    }
+}
+
 const LoginButton = () => {
     const {loginWithRedirect} = useAuth0();
 
@@ -48,28 +81,32 @@ const LoginLogoutButton = () => {
 
 function ButtonAppBar() {
     return (
-        <Box sx={{flexGrow: 1}}>
+        <Box sx={style.head}>
             <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{mr: 2}}
-                        href={"/"}
-                    >
-                        <HomeIcon/>
-                    </IconButton>
-                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                <Toolbar sx={style.navBar}>
+                    <Box sx={style.home}>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{mr: 2}}
+                            href={"/"}
+                        >
+                            <HomeIcon/>
+                        </IconButton>
+                    </Box>
+
+                    <Typography variant="h6" component="div" sx={style.title}>
                         YuoTube
                     </Typography>
-                    <LoginLogoutButton/>
+                    <Box sx={style.loginLogoutButton}>
+                        <LoginLogoutButton/>
+                    </Box>
                 </Toolbar>
             </AppBar>
         </Box>
-    )
-        ;
+    );
 }
 
 export default ButtonAppBar;
