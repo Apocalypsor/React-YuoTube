@@ -1,0 +1,18 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+COPY backend /app
+
+RUN apk update \
+  && apk upgrade \
+  && apk add --update ca-certificates coreutils bash npm \
+  && update-ca-certificates \
+  && npm install \
+  && rm -rf /var/cache/apk/* \
+  && rm -rf /usr/share/nginx/html \
+  && npm run build
+
+ENTRYPOINT npm start
