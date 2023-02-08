@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Loading from "../component/common/Loading";
 import {getVideoById} from "../api/video";
 import {useParams} from "react-router-dom";
+import LikeButton from "../component/common/LikeButton";
 
 const style = {
     container: {
@@ -18,6 +19,10 @@ const style = {
     },
     video: {
         width: "100%",
+    },
+    titleBox: {
+        display: 'flex',
+        alignItems: 'center',
     },
     title: {
         fontSize: '3rem',
@@ -52,8 +57,9 @@ const Video = () => {
                         controls
                     />
                     <Typography gutterBottom component="div" sx={style.title}>
-                        {video.attributes.title}
+                        {video.attributes.title} <LikeButton/>
                     </Typography>
+
                     <Typography variant="body2" color="text.secondary" sx={style.description}>
                         {video.attributes.description}
                     </Typography>

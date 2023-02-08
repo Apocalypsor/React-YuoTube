@@ -1,10 +1,10 @@
 import React from "react";
 import {Avatar, Card, CardContent, CardHeader, CardMedia, IconButton} from "@mui/material";
-import theme from "../../theme";
 import Link from '@mui/material/Link';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import Typography from "@mui/material/Typography";
 import {formatTime} from "../../tool";
+import LikeButton from "../common/LikeButton";
 
 const style = {
     link: {
@@ -19,20 +19,11 @@ const style = {
         paddingTop: '56.25%', // 16:9
     },
     cardContent: {
-        flexGrow: 1,
-    },
-    playIcon: {
-        height: 38,
-        width: 38,
-        position: 'absolute',
-        left: 'calc(50% - 19px)',
-        top: 'calc(50% - 19px)',
-        backgroundColor: theme.palette.secondary.main,
-        borderRadius: '50%',
-        color: 'white',
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        paddingLeft: '5%',
+        paddingRight: '5%',
     },
 };
 
@@ -60,13 +51,13 @@ const VideoCard = ({id, title, views, image, user, createdAt}) => {
                     image={image}
                     title={title}
                 />
-
-                <CardContent sx={style.cardContent}>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {`${views} views`}
-                    </Typography>
-                </CardContent>
             </Link>
+
+            <CardContent sx={style.cardContent}>
+                <Typography body1='span' fontSize={'1.2rem'}>{`${views} views`}</Typography>
+                <LikeButton size={'medium'}/>
+            </CardContent>
+
         </Card>
     );
 };
