@@ -32,7 +32,7 @@ const style = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        width: '50%',
+        width: '80%',
     },
     title: {
         paddingTop: '1.2%',
@@ -43,7 +43,7 @@ const style = {
     viewsBox: {
         display: 'flex',
         justifyContent: 'flex-end',
-        width: '50%',
+        width: '20%',
     },
     views: {
         fontSize: '1.5rem',
@@ -108,6 +108,7 @@ const Video = () => {
     const [views, setViews] = React.useState(0);
 
     const [user, setUser] = React.useState();
+    const [userCard, setUserCard] = React.useState({});
     const [video, setVideo] = React.useState();
 
     const [content, setContent] = React.useState("");
@@ -122,6 +123,7 @@ const Video = () => {
 
             const result = await getVideoById(id);
             setVideo(result);
+            setUserCard(result.attributes.user.data.attributes);
 
             const comments = await getCommentByVideoId(id);
             setComments(comments);
@@ -161,7 +163,7 @@ const Video = () => {
                     />
                     <div style={{display: "flex", alignItems: "center"}}>
                         <Box style={style.titleBox}>
-                            <UserCard user={user}/>
+                            <UserCard user={userCard}/>
                             <Typography gutterBottom component="div" sx={style.title}>
                                 {video.attributes.title}
                             </Typography>

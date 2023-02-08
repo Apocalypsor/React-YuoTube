@@ -21,7 +21,7 @@ const getVideos = async (page = 1) => {
 }
 
 const getVideoById = async (id) => {
-    const video = await (await getClient()).get(`/api/videos/${id}`);
+    const video = await (await getClient()).get(`/api/videos/${id}?populate=user`);
     if (video.data.hasOwnProperty("error")) {
         return {};
     } else {

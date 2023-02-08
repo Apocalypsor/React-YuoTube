@@ -19,6 +19,11 @@ First make sure you are in the `frontend` folder.
    REACT_APP_API_URL=Your Backend URL, do not include the trailing slash
    ```
 
+3. Build the frontend
+    ```bash
+    npm install && npm run build
+    ```
+
 ## Backend
 
 First make sure you are in the `backend` folder.
