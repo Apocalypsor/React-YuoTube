@@ -1,7 +1,7 @@
 import {getClient} from "./client";
 
 const getVideos = async () => {
-    const videos = await (await getClient()).get('/api/videos');
+    const videos = await (await getClient()).get('/api/videos?sort=createdAt:desc');
     if (videos.data.hasOwnProperty("error")) {
         return [];
     } else {

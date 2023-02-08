@@ -1,0 +1,29 @@
+{
+    "kind": "collectionType",
+    "collectionName": "comments",
+    "info": {
+        "singularName": "comment",
+        "pluralName": "comments",
+        "displayName": "Comment",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": false
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "content": {
+            "type": "text"
+        },
+        "video": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::video.video"
+        },
+        "user": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::user-profile.user-profile"
+        }
+    }
+}

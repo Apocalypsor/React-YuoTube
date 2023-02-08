@@ -35,6 +35,7 @@ function LikeButton({videoId, size = "large"}) {
     function handleClick() {
         async function postData() {
             if (!liked.found) {
+                setLiked({found: true});
                 const res = await postLike(userId, videoId);
                 setLiked(res);
             } else {
