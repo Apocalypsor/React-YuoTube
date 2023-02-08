@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.backend
+    container_name: yuotube-backend
+    environment:
+      - DUMMY_USER_ID=
+      - AUTH0_CERT=
+      - API_TOKEN_SALT=
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_USERNAME=postgres
+      - DATABASE_NAME=postgres
+      - DATABASE_PASSWORD=postgres
+      - DATABASE_SSL=false
+
+  db:
+    image: postgres:15-alpine
+    container_name: yuotube-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
