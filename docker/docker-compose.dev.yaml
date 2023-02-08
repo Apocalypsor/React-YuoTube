@@ -3,19 +3,25 @@ version: '3'
 services:
   backend:
     build:
-      context: ./
+      context: ../
       dockerfile: docker/Dockerfile.backend
     container_name: yuotube-backend
     environment:
-      - DUMMY_USER_ID=
-      - AUTH0_CERT=
-      - API_TOKEN_SALT=
+      - DUMMY_USER_ID=someid
+      - AUTH0_CERT=somecert
+      - APP_KEYS=somekey
+      - ADMIN_JWT_SECRET=tobemodified
+      - JWT_SECRET=tobemodified
+      - API_TOKEN_SALT=somesalt
+      - CORS_ORIGIN=*
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
       - DATABASE_USERNAME=postgres
       - DATABASE_NAME=postgres
       - DATABASE_PASSWORD=postgres
       - DATABASE_SSL=false
+    ports:
+      - 80:1337
 
   db:
     image: postgres:15-alpine
