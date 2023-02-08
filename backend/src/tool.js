@@ -10,6 +10,14 @@ const jwtVerify = async (token) => {
     }
 }
 
+const updateObject = (targetObj, sourceObj) => {
+    for (const key in sourceObj) {
+        targetObj[key] = sourceObj[key];
+    }
+    return targetObj;
+}
+
 module.exports = {
     jwtVerify,
+    updateObject
 }

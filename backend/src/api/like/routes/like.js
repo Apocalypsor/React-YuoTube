@@ -6,4 +6,6 @@
 
 const {createCoreRouter} = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::like.like');
+module.exports = createCoreRouter('api::like.like', {
+    only: ['find', 'create', 'delete'],
+});

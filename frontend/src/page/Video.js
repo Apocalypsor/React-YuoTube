@@ -57,7 +57,7 @@ const Video = () => {
                         controls
                     />
                     <Typography gutterBottom component="div" sx={style.title}>
-                        {video.attributes.title} <LikeButton/>
+                        {video.attributes.title} <LikeButton videoId={id}/>
                     </Typography>
 
                     <Typography variant="body2" color="text.secondary" sx={style.description}>

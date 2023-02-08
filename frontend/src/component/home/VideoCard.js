@@ -55,7 +55,7 @@ const VideoCard = ({id, title, views, image, user, createdAt}) => {
 
             <CardContent sx={style.cardContent}>
                 <Typography body1='span' fontSize={'1.2rem'}>{`${views} views`}</Typography>
-                <LikeButton size={'medium'}/>
+                <LikeButton size={'medium'} videoId={id}/>
             </CardContent>
 
         </Card>
