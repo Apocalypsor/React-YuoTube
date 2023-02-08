@@ -14,11 +14,9 @@ const Callback = () => {
             const token = await getIdTokenClaims();
             const response = await postAuthCallback(token.__raw);
             if (isAuthenticated) {
-                const token = await getIdTokenClaims();
-                await set("token", token.__raw);
+                await set("token", response);
                 await set("user", JSON.stringify(user));
             }
-            console.log(response);
         }
 
         if (!isLoading && !error) {

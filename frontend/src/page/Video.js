@@ -20,11 +20,11 @@ const style = {
         width: "100%",
     },
     title: {
-        fontSize: '2rem',
+        fontSize: '3rem',
         textAlign: 'left',
     },
     description: {
-        fontSize: '1rem',
+        fontSize: '1.5rem',
         textAlign: 'left',
     }
 }

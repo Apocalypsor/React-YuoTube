@@ -12,7 +12,9 @@ const getClient = async () => {
     const token = await get('token');
     if (token) {
         // TODO: If I add this token to Authorization header, I always get 401 Unauthorized from Strapi.
-        client.defaults.headers.common['token'] = token;
+        client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+        delete client.defaults.headers.common['Authorization'];
     }
 
     return client;

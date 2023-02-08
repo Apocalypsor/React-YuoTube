@@ -16,8 +16,9 @@ module.exports = createCoreController('api::user-profile.user-profile', ({strapi
                 const {nickname, name, email, picture} = jwt;
                 const entity = await strapi.service('api::user-profile.user-profile').findByEmail(email);
 
+                let res;
                 if (!entity) {
-                    return await strapi.service('api::user-profile.user-profile').create({
+                    res = strapi.service('api::user-profile.user-profile').create({
                         data: {
                             nickname: nickname,
                             name: name,
@@ -26,7 +27,7 @@ module.exports = createCoreController('api::user-profile.user-profile', ({strapi
                         }
                     });
                 } else {
-                    return await strapi.service('api::user-profile.user-profile').update(
+                    res = await strapi.service('api::user-profile.user-profile').update(
                         entity.id,
                         {
                             data: {
@@ -37,6 +38,10 @@ module.exports = createCoreController('api::user-profile.user-profile', ({strapi
                             }
                         });
                 }
+
+                return strapi.plugins['users-permissions'].services.jwt.issue({
+                    id: process.env.DUMMY_USER_ID,
+                });
             }
         }
 
