@@ -62,7 +62,7 @@ function ButtonAppBar() {
                         <HomeIcon/>
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                        Youtube
+                        YuoTube
                     </Typography>
                     <LoginLogoutButton/>
                 </Toolbar>
