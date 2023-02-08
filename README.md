@@ -74,6 +74,7 @@ First make sure you are in the `backend` folder.
    ```
    For Public Users, you have to ensure you have following permissions:
    ```
+   Comment: find
    Like: count, find
    User-profile: callback, find, findOne
    Video: find, findOne, view

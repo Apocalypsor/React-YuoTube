@@ -191,7 +191,7 @@ const Video = () => {
 
                     <Divider/>
 
-                    {user && <Card sx={style.commentCard}>
+                    <Card sx={style.commentCard}>
                         <CardContent>
                             <Typography variant={"h4"}>Comments</Typography>
                             <Box key={commentBoxId} sx={style.commentBox}>
@@ -215,7 +215,7 @@ const Video = () => {
                                 ))}
                             </Box>
 
-                            <Box sx={style.commentBarContainer}>
+                            {user && <Box sx={style.commentBarContainer}>
                                 <TextField
                                     fullWidth
                                     value={content}
@@ -236,9 +236,9 @@ const Video = () => {
                                 >
                                     Post
                                 </Button>
-                            </Box>
+                            </Box>}
                         </CardContent>
-                    </Card>}
+                    </Card>
                 </CardContent>
             </Card>
         </div>

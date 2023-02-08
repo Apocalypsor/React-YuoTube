@@ -100,7 +100,6 @@ function UploadModal() {
                 url: res.video.url,
                 thumbnail: res.cover.url,
                 views: 0,
-                likes: 0,
                 user: (await getUser()).email,
             }
             await createVideo({
