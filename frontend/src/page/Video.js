@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import {getCommentByVideoId, postComment} from "../api/comment";
 import {getUser} from "../tool";
+import UserCard from "../component/common/UserCard";
 
 const style = {
     container: {
@@ -26,17 +27,33 @@ const style = {
     video: {
         width: "100%",
     },
+    titleViewsBox: {},
     titleBox: {
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'flex-start',
+        width: '50%',
     },
     title: {
+        paddingTop: '1.2%',
         fontSize: '3rem',
+        textAlign: 'left',
+        paddingLeft: '30px',
+    },
+    viewsBox: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        width: '50%',
+    },
+    views: {
+        fontSize: '1.5rem',
         textAlign: 'left',
     },
     description: {
         fontSize: '1.5rem',
         textAlign: 'left',
+        marginTop: '1%',
+        marginBottom: '1%',
     },
     commentCard: {
         textAlign: 'left',
@@ -88,6 +105,7 @@ const style = {
 const Video = () => {
     const {id} = useParams();
     const viewed = React.useRef(false);
+    const [views, setViews] = React.useState(0);
 
     const [user, setUser] = React.useState();
     const [video, setVideo] = React.useState();
@@ -111,7 +129,7 @@ const Video = () => {
             if (!viewed.current) {
                 viewed.current = true;
                 const views = await postView(id);
-                console.log(views);
+                setViews(views);
             }
 
         }
@@ -141,10 +159,20 @@ const Video = () => {
                         src={video.attributes.url}
                         controls
                     />
-                    <Typography gutterBottom component="div" sx={style.title}>
-                        {video.attributes.title} <LikeButton videoId={id}/>
-                    </Typography>
-
+                    <div style={{display: "flex", alignItems: "center"}}>
+                        <Box style={style.titleBox}>
+                            <UserCard user={user}/>
+                            <Typography gutterBottom component="div" sx={style.title}>
+                                {video.attributes.title}
+                            </Typography>
+                        </Box>
+                        <Box sx={style.viewsBox}>
+                            <div style={{paddingLeft: "2%", marginRight: "5%"}}><LikeButton videoId={id}/></div>
+                            <Typography variant="body2" color="text.secondary" sx={style.views}>
+                                {views} views
+                            </Typography>
+                        </Box>
+                    </div>
                     <Typography variant="body2" color="text.secondary" sx={style.description}>
                         {video.attributes.description}
                     </Typography>

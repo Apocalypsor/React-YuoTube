@@ -30,8 +30,10 @@ module.exports = createCoreController('api::video.video', () => ({
         const entity = await strapi.service('api::video.video').findOne(id, query);
         entity.views = '' + (parseInt(entity.views) + 1);
         console.log(entity);
-        return await strapi.service('api::video.video').update(id, {
+        const res = await strapi.service('api::video.video').update(id, {
             data: entity
         });
+
+        return res.views;
     }
 }));
