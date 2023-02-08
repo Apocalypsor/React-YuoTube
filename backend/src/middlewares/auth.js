@@ -8,6 +8,8 @@ const {jwtVerify} = require("../tool");
 
 module.exports = () => {
     return async (ctx, next) => {
+        if (ctx.state.user) return await next();
+
         const {token} = await ctx.request.header;
         if (!token) {
             return ctx.unauthorized('No authorization header');

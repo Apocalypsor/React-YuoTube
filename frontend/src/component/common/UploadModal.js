@@ -8,6 +8,8 @@ import Button from "@mui/material/Button";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import TextField from "@mui/material/TextField";
 import theme from "../../theme";
+import {createVideo, upload} from "../../api/video";
+import {getUser} from "../../tool";
 
 const style = {
     uploadModal: {
@@ -16,7 +18,8 @@ const style = {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: '40%',
-        height: '87%',
+        maxWidth: '600px',
+        maxHeight: '90%',
         borderRadius: '12px',
         bgcolor: theme.palette.background.paper,
         border: '2px solid #000',
@@ -39,6 +42,9 @@ const style = {
         justifyContent: "center",
         alignItems: "center"
     },
+    textField: {
+        marginTop: "1%",
+    },
     button: {
         padding: "12px 8px !important",
         width: "400px !important",
@@ -53,12 +59,14 @@ function UploadModal() {
 
     const [uploadedVideo, setUploadedVideo] = useState();
     const [uploadedCover, setUploadedCover] = useState();
-    const [description, setDescription] = useState('')
+    const [description, setDescription] = useState()
+    const [title, setTitle] = useState()
 
     const clearState = () => {
         setUploadedVideo(null);
         setUploadedCover(null);
-        setDescription('');
+        setDescription(null);
+        setTitle(null);
         setOpen(false);
     }
 
@@ -67,42 +75,43 @@ function UploadModal() {
         setOpen(true);
     }
 
-    const changeDescription = (e) => {
-        setDescription(e.target.value);
-    }
-
     const handleUploadClose = () => {
-        if (!uploadedVideo) return;
+        if (!uploadedVideo || !uploadedCover || !description || !title) {
+            alert("Please upload both video and cover!");
+            return;
+        }
 
-        // let formData = new FormData();
-        //
-        // for (let img of uploaded) {
-        //     formData.append("file", img.file);
-        // }
-        //
-        // const upload = async () => {
-        //     let posts = []
-        //     for (let file of response.file) {
-        //         posts.push({
-        //             username: localStorage.getItem("CurrentUsername"),
-        //             postType: file.type,
-        //             postContent: file.url,
-        //             description: description,
-        //             public: privacy,
-        //             tagging: tags
-        //         })
-        //     }
-        //     await postPost(posts);
-        // }
-        //
-        // upload().then(() => {
-        //     setShowAlert(true)
-        //     setTimeout(() => {
-        //         setShowAlert(false)
-        //     }, 3000)
-        //
-        //     window.location.reload()
-        // });
+        const postData = async () => {
+            const formData = new FormData();
+            formData.append('files', uploadedVideo.file);
+            formData.append('files', uploadedCover.file);
+            formData.append('path', 'video');
+            const res = await upload(formData);
+            console.log(res);
+
+            const newVideo = {
+                title: title,
+                description: description,
+                url: res.video.url,
+                thumbnail: res.cover.url,
+                views: 0,
+                likes: 0,
+                user: (await getUser()).email,
+            }
+            await createVideo({
+                data: newVideo
+            });
+
+        }
+
+        postData().then((res) => {
+            setShowAlert(true)
+            setTimeout(() => {
+                setShowAlert(false)
+            }, 3000)
+
+            window.location.reload()
+        });
     }
 
     const handleUploadVideo = (e) => {
@@ -130,6 +139,7 @@ function UploadModal() {
                 name: file.name,
                 size: file.size,
                 file: file,
+                target: e.target,
                 url: URL.createObjectURL(file)
             });
         }
@@ -203,7 +213,20 @@ function UploadModal() {
                         </Container>
                     )}
 
-
+                    <Container>
+                        <TextField
+                            id="outlined-basic"
+                            label="Title"
+                            variant="outlined"
+                            size="medium"
+                            multiline
+                            rows={1}
+                            fullWidth
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            sx={style.textField}
+                        />
+                    </Container>
                     <Container>
                         <TextField
                             id="outlined-basic"
@@ -214,7 +237,8 @@ function UploadModal() {
                             rows={4}
                             fullWidth
                             value={description}
-                            onChange={changeDescription}
+                            onChange={(e) => setDescription(e.target.value)}
+                            sx={style.textField}
                         />
                     </Container>
                     <Container sx={style.uploadButtonWrapper}>

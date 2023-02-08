@@ -21,5 +21,5 @@ const formatTime = (time) => {
 
 export {
     getUser,
-    formatTime
+    formatTime,
 };

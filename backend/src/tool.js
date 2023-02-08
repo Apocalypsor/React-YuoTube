@@ -11,5 +11,5 @@ const jwtVerify = async (token) => {
 }
 
 module.exports = {
-    jwtVerify
+    jwtVerify,
 }
