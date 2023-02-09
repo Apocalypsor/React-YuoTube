@@ -1,5 +1,9 @@
 # React-Youtube
 
+## Entity Relationship Diagram
+
+![ERD](docs/ERD.png)
+
 ## Frontend
 
 First make sure you are in the `frontend` folder.
