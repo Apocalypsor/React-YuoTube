@@ -59,7 +59,7 @@ First make sure you are in the `backend` folder.
 1. Login to the backend after creating the admin account.
 
 2. Create a dummy user in User via Content Manager.
-   > You can use and random information, we just need the id of the user.
+   > You can use any random information, we just need the id of the user.
 
 3. Update the `DUMMY_USER_ID` in `docker-compose.yaml` to the id of the dummy user, and the restart the backend.
     ```bash
